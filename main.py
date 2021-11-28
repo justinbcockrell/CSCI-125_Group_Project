@@ -3,18 +3,16 @@ import tkinter as tk
 from tkinter import ttk, font, filedialog
 from functools import partial
 
-
+#global variables
 mainWindow = ""
 textPane = ""
 menu_bar = None
 filePath = ""
 exec_dir = Path(__file__).parent
+wrap = 0
 
 # TODO: Look over this document for TODO tags. Make sure you have contributed your part on time
 # TODO: Brianna and Deon, please claim some of the unclaimed work that needs to be done. Listed below
-# Justin Cockrell and Brian Kram are the only contributers to this revision so far. In addition to the tasks you have
-
-
 
 def stub():
     """
@@ -35,6 +33,20 @@ def initialize_application_frame():
     mainWindow = tk.Tk()
     mainWindow.title("Notepad Group Project")
     mainWindow.geometry("800x500")
+
+def toggle_wrap():
+    """
+    Justin Cockrell.
+    Toggles Word in the editor
+    """
+    global textPane #textPane is global. This is the reference to it.
+    global wrap
+    if wrap == 0:
+        wrap = 1
+        textPane.config(wrap=tk.WORD)
+    elif wrap == 1:
+        wrap = 0
+        textPane.config(wrap="none")
 
 def font_window():
     """
@@ -72,22 +84,6 @@ def font_window():
     apply = tk.Button(fontWindow, text="Apply", command=partial(get_font,fontBox,size,style))
     apply.grid(row=1, column=1, columnspan=15)
 
-def upper_selection():
-
-    global textPane
-    start = tk.SEL_FIRST
-    end = tk.SEL_LAST
-    selection = textPane.get(start,end)
-    textPane.insert(start, selection.upper())
-    textPane.delete(start,end)
-
-    textPane.tag_add('found', "1.0", tk.END)
-    textPane.tag_config("found", bg="red")
-
-
-def lower_selection():
-    global textPane
-    print("Lower")
 
 def get_font(type,size,style):
     """
@@ -106,10 +102,36 @@ def get_font(type,size,style):
 
     textPane.configure(font=choice)
 
+
+def upper_selection():
+    """
+    Takes the selected range from the text pane and converts that text to uppercase in place.
+    """
+    global textPane
+    start = tk.SEL_FIRST #The first index of the selected range
+    end = tk.SEL_LAST #the last index of the highlighted range
+    selection = textPane.get(start,end) #store the selected text in a variable
+    textPane.insert(start, selection.upper())#insert the uppercase stuff
+    textPane.delete(start,end) #delete the selection (the not converted)
+
+def lower_selection():
+    """
+    Takes the selected range from the text pane and converts that text to lowercase in place.
+    """
+    global textPane
+    start = tk.SEL_FIRST #The first index of the selected range
+    end = tk.SEL_LAST #the last index of the highlighted range
+    selection = textPane.get(start,end)#store the selected text in a variable
+    textPane.insert(start, selection.lower())#insert the lowercase stuff
+    textPane.delete(start,end)#delete the selection (the not converted)
+
+
 def initialize_components():
     """
     All additional GUI elements are currently in this function
+    All are configured and added here.
     Justin Cockrell and Brian Kram
+    Edits in the menu by deon
     """
     #I put our components into 1 function. We can add the menus here, the scrollbars here.. Seperate if needed
     print("Now adding components \n\n")
@@ -118,15 +140,16 @@ def initialize_components():
     # TODO: figure out how to get rid of menubutton arrows
 
     """
+    Justin's proposed way of handling menus. 
     menuBar = tk.Menu(mainWindow)
     fileMenu = tk.Menu(menuBar, tearoff=0)
     fileMenu.add_command(label="Open")
     fileMenu.add_separator()
     fileMenu.add_command(label="Save")
     menuBar.add_cascade(label="file", menu=fileMenu)
-    mainWindow.config(menu=menuBar)
+    mainWindow.config(menu=menuBar) This is what makes it a universal menu bar and makes it mac ready 
     """
-
+    global wrap
     global menu_bar
     menu_bar = ttk.Frame(mainWindow)
     menu_bar.pack(side="top")
@@ -161,7 +184,8 @@ def initialize_components():
     view = ttk.Menubutton(menu_bar, text="View")
     view.grid(row=0, column=2)
     view_menu = tk.Menu(view, tearoff=0)
-    view_menu.add_command(label="Toggle Word Wrap", command=stub) #TODO: Brianna
+    #view_menu.add_command(label="Toggle Word Wrap", command=toggle_wrap) #TODO: Brianna
+    view_menu.add_checkbutton(label="Word Wrap",offvalue=0,onvalue=1,variable=wrap,command=toggle_wrap)
     view_menu.add_command(label="Text Formatting...", command=font_window) # Justin - Done
     view["menu"] = view_menu # Associate menu with button
     # Help menu
@@ -202,7 +226,6 @@ def insert_data(data):
     Loads passed data into the text box, replacing whatever is currently in the text box.
     Justin Cockrell
     """
-    print("Open_file called me.. Now we're here.")
     #This won't change much. This just adds data to the textbox. Open file will change
     textPane.delete("1.0",tk.END)
     textPane.insert("1.0", data)
@@ -211,25 +234,22 @@ def insert_data(data):
 #FILE IO SECTION
 #Expectation: When clicked, open file will open a filedialog and then pass the path of the file to insert_data
 def open_file():
-    global filePath
-    # TODO: Deon, error handling
-    filePath = filedialog.askopenfilename()
-    with open(filePath, "r") as file:
-        data = file.read()
+    global filePath #Imports the global filepath variable for use locally
+    filePath = filedialog.askopenfilename() #opens a dialog to browse for file, assigning it to the file path.
+    with open(filePath, "r") as file: #open the file
+        data = file.read() #read data into variable
     # Modified by Deon
-    insert_data(data)
-
-
+    insert_data(data) #Justin's function to put the data into the text frame
 
 #Expectation: When clicked, save file will open a filedialog and then save the file to whatever is returned from the
 #filedialog
-def save_file(saveAs = False):
-    # TODO: Deon
-    # Current version built by Justin Cockrell
-    global filePath
+def save_file(saveAs = False): #Optional saveAs variable to turn this into a save as function
+    global filePath #import global variable
     if filePath == "" or saveAs:
-        filePath = filedialog.asksaveasfilename()
-    with open(filePath, "w") as file:
+    #If there is no filepath (so like if they just click save but we don't know the file path
+    #Or if we just pass in saveAs = True. This way we can force it to ask for a filename.
+        filePath = filedialog.asksaveasfilename() #assign a new filepath
+    with open(filePath, "w") as file: #here we are writing. the variable.
         data = file.write(textPane.get("1.0", tk.END))
     print(textPane.get("1.0", tk.END))
 
