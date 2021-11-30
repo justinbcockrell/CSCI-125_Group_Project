@@ -1,3 +1,22 @@
-Header
-body
-body
+About 
+Open source Text editor developed in Python for our Group project. 
+
+Credits: 
+Main Window GUI Components: Brian Kram and Justin Cockrell using Tkinter
+Font Selection, Word Wrap Toggle, Starter Dummy functions, upper lower selection: Justin Cockrell
+File Input / Output: Deon Jacobs
+Sort alphabetically, Find / Replace: Bryanna Chamber
+Github Manager / coordinator: Brian Kram 
+Task Delegation / organizer: Justin Cockrell via list and volunteer
+
+
+Concepts used in this project:
+GUI Design
+Date / Time 
+String manipulation
+File input / output and text parsing
+Error handling
+Text formatting 
+Functions
+Global and local variables
+
