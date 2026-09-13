@@ -1,0 +1,4 @@
+# Real credentials live here. Never commit this file.
+config.json
+__pycache__/
+*.pyc

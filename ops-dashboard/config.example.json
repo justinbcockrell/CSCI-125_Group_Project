@@ -1,0 +1,51 @@
+{
+  "server": {
+    "host": "127.0.0.1",
+    "port": 8787,
+    "refresh_seconds": 60,
+    "open_browser": true
+  },
+
+  "zabbix": {
+    "enabled": true,
+    "url": "https://zabbix.example.local/api_jsonrpc.php",
+    "api_token": "PASTE_ZABBIX_API_TOKEN_HERE",
+    "username": "",
+    "password": "",
+    "min_severity": 2,
+    "host_groups": [],
+    "limit": 200,
+    "show_suppressed": false,
+    "ca_bundle": "",
+    "verify_tls": true,
+    "timeout": 20
+  },
+
+  "planner": {
+    "enabled": true,
+    "tenant_id": "00000000-0000-0000-0000-000000000000",
+    "client_id": "00000000-0000-0000-0000-000000000000",
+    "client_secret": "PASTE_CLIENT_SECRET_VALUE_HERE",
+    "environment_url": "https://orgXXXXXXXX.crm.dynamics.com",
+    "plans": [],
+    "week_starts_on": "monday",
+    "include_completed": false,
+    "ca_bundle": "",
+    "verify_tls": true,
+    "timeout": 30
+  },
+
+  "deskpro": {
+    "enabled": true,
+    "base_url": "https://yourcompany.deskpro.com",
+    "api_key": "12:PASTE_THE_LONG_CODE_HERE",
+    "only_mine": true,
+    "agent_id": 0,
+    "departments": [],
+    "statuses": ["awaiting_agent", "awaiting_user"],
+    "limit": 50,
+    "ca_bundle": "",
+    "verify_tls": true,
+    "timeout": 20
+  }
+}

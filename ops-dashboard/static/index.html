@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Watchdesk</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <h1 class="wordmark"><span class="dot"></span>Watchdesk</h1>
+    <span class="spacer"></span>
+    <span class="synced" id="synced">connecting&hellip;</span>
+    <button class="btn" id="refresh" type="button">Refresh</button>
+  </header>
+
+  <div class="deck">
+    <section class="column" aria-labelledby="h-zabbix">
+      <div class="src">
+        <span class="src-name" id="h-zabbix">Zabbix &middot; Alerts</span>
+        <span class="src-count" id="zabbix-count">&mdash;</span>
+        <span class="src-meta"><span class="health off" id="zabbix-health"></span><span id="zabbix-meta">waiting</span></span>
+      </div>
+      <div class="panel" id="zabbix-panel"><p class="empty">Loading&hellip;</p></div>
+    </section>
+
+    <section class="column" aria-labelledby="h-planner">
+      <div class="src">
+        <span class="src-name" id="h-planner">Planner Premium &middot; This week</span>
+        <span class="src-count" id="planner-count">&mdash;</span>
+        <span class="src-meta"><span class="health off" id="planner-health"></span><span id="planner-meta">waiting</span></span>
+      </div>
+      <div class="panel" id="planner-panel"><p class="empty">Loading&hellip;</p></div>
+    </section>
+
+    <section class="column" aria-labelledby="h-deskpro">
+      <div class="src">
+        <span class="src-name" id="h-deskpro">DeskPro &middot; Tickets</span>
+        <span class="src-count" id="deskpro-count">&mdash;</span>
+        <span class="src-meta"><span class="health off" id="deskpro-health"></span><span id="deskpro-meta">waiting</span></span>
+      </div>
+      <div class="panel" id="deskpro-panel"><p class="empty">Loading&hellip;</p></div>
+    </section>
+  </div>
+
+  <footer class="colophon">
+    <span>Config: <code>config.json</code></span>
+    <span>Test connections: <code>python run.py --check</code></span>
+    <span id="poll-note"></span>
+  </footer>
+
+</div>
+<script src="/app.js"></script>
+</body>
+</html>
