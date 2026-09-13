@@ -1,0 +1,6 @@
+# Impeccable engine binaries: fetched per platform by the installer, never tracked.
+# Mirrors the upstream repo's own ignore rules (pbakaus/impeccable .gitignore).
+**/skills/impeccable/scripts/bin/
+
+# Local-only Claude Code hook config written by `impeccable install`.
+.claude/settings.local.json
